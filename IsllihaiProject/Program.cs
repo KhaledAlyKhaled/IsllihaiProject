@@ -1,7 +1,14 @@
+using IsllihaiProjectDAL.Contexts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<islahiniDbContext>(options =>
+options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"])
+);
 
 var app = builder.Build();
 

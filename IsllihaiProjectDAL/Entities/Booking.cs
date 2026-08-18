@@ -19,8 +19,8 @@ namespace IsllihaiProjectDAL.Entities
 
         public int UserId { get; set; }
         public User User { get; set; }
-        public int TechnicanId { get; set; }
-        public Technican Technican { get; set; }
+        public int? TechnicanId { get; set; }
+        public Technican? Technican { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public Review Review { get; set; }

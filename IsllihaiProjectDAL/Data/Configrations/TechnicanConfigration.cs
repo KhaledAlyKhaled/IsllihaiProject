@@ -19,10 +19,10 @@ namespace IsllihaiProjectDAL.Data.Configrations
             builder.ToTable(x =>
              x.HasCheckConstraint("RangeConstraint", "YearsOfExperience Between 0 and 20"));
 
-            builder.HasOne<User>()
-                 .WithOne(x => x.Technican)
-                 .HasForeignKey<Technican>(x => x.UserId)
-                 .OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.User)
+     .WithOne(x => x.Technican)
+     .HasForeignKey<Technican>(x => x.UserId)
+     .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(x => x.UserId)
                 .IsRequired();

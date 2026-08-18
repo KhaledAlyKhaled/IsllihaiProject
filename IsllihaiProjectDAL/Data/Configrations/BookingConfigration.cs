@@ -27,12 +27,6 @@ namespace IsllihaiProjectDAL.Data.Configrations
             builder.Property(x => x.Status)
                 .HasConversion<string>();
 
-            builder.Property(x => x.UserId)
-                .IsRequired();
-
-            builder.Property(x => x.CategoryId)
-                .IsRequired();
-
             builder.HasOne(b => b.User)
                 .WithMany(u => u.Bookings)
                 .HasForeignKey(b => b.UserId)
