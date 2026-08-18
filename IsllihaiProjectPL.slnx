@@ -1,3 +1,5 @@
 <Solution>
   <Project Path="IsllihaiProject/IsllihaiProject.csproj" />
+  <Project Path="IsllihaiProjectBL/IsllihaiProjectBL.csproj" />
+  <Project Path="IsllihaiProjectDAL/IsllihaiProjectDAL.csproj" />
 </Solution>
