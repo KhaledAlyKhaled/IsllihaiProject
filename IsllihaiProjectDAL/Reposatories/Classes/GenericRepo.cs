@@ -1,5 +1,4 @@
 ﻿using IsllihaiProjectDAL.Contexts;
-using IsllihaiProjectDAL.Entities;
 using IsllihaiProjectDAL.Reposatories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,40 +9,40 @@ using System.Threading.Tasks;
 
 namespace IsllihaiProjectDAL.Reposatories.Classes
 {
-    public class UserRepo :IUserRepo
+    public class GenericRepo<T> : IGenericRepo<T> where T : class
     {
         private readonly islahiniDbContext _DbContext;
-        public UserRepo (islahiniDbContext dbContext )
+
+        public GenericRepo(islahiniDbContext dbContext)
         {
             _DbContext = dbContext;
         }
-        public int Add(User user)
+        public int Add(T item)
         {
-            _DbContext.Add(user);
+            _DbContext.Set<T>().Add(item);
+            return _DbContext.SaveChanges();
+
+        }
+
+        public int Delete(T item)
+        {
+            _DbContext.Set<T>().Remove(item);
             return _DbContext.SaveChanges();
         }
 
-        public int Delete(int id)
+        public IEnumerable<T> GetAll()
         {
-            var user = _DbContext.Users.Find(id);
-            if (user is null)
-                return 0;
-            return _DbContext.SaveChanges();
+            return _DbContext.Set<T>().AsNoTracking().ToList();
         }
 
-        public IEnumerable<User>GetAll()
+        public T? GetById(int id)
         {
-            return _DbContext.Users.ToList();
+            return _DbContext.Set<T>().Find(id);
         }
 
-        public User? GetById(int Id)
+        public int Update(T item)
         {
-            return _DbContext.Users.Find(Id);
-        }
-
-        public int Update(User user)
-        {
-            _DbContext.Users.Update(user);
+            _DbContext.Set<T>().Update(item);
             return _DbContext.SaveChanges();
         }
     }
