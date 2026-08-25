@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IsllihaiProjectDAL.Reposatories.Classes
 {
-    public class GenericRepo<T> : IGenericRepo<T> where T : class
+    public class GenericRepo<T> : IGenericRepo<T> where T : class , new()
     {
         private readonly islahiniDbContext _DbContext;
 
@@ -17,22 +17,23 @@ namespace IsllihaiProjectDAL.Reposatories.Classes
         {
             _DbContext = dbContext;
         }
-        public int Add(T item)
+        public void Add(T item)
         {
             _DbContext.Set<T>().Add(item);
-            return _DbContext.SaveChanges();
-
         }
 
-        public int Delete(T item)
+        public void Delete(T item)
         {
             _DbContext.Set<T>().Remove(item);
-            return _DbContext.SaveChanges();
+            
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(Func<T, bool>? condetion = null)
         {
-            return _DbContext.Set<T>().AsNoTracking().ToList();
+            if (condetion is null)
+                return _DbContext.Set<T>().AsNoTracking().ToList();
+
+            return _DbContext.Set<T>().AsNoTracking().Where(condetion).ToList();
         }
 
         public T? GetById(int id)
@@ -40,10 +41,10 @@ namespace IsllihaiProjectDAL.Reposatories.Classes
             return _DbContext.Set<T>().Find(id);
         }
 
-        public int Update(T item)
+        public void Update(T item)
         {
             _DbContext.Set<T>().Update(item);
-            return _DbContext.SaveChanges();
+            
         }
     }
 }

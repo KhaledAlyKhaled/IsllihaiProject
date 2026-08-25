@@ -1,4 +1,6 @@
 using IsllihaiProjectDAL.Contexts;
+using IsllihaiProjectDAL.Reposatories.Classes;
+using IsllihaiProjectDAL.Reposatories.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -10,6 +12,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<islahiniDbContext>(options =>
 options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"])
 );
+//builder.Services.AddScoped(typeof (IGenericRepo<>), typeof (GenericRepo<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //
 var app = builder.Build();
 
