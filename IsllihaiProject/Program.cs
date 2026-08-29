@@ -14,6 +14,7 @@ options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"
 );
 //builder.Services.AddScoped(typeof (IGenericRepo<>), typeof (GenericRepo<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITecnicianRepo , TecnicianRepo>();
 //
 var app = builder.Build();
 

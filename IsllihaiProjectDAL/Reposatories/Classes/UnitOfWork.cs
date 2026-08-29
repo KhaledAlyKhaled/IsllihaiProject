@@ -13,12 +13,14 @@ namespace IsllihaiProjectDAL.Reposatories.Classes
         private readonly Dictionary<Type, object> _repositores = new();
         private readonly islahiniDbContext dbContext;
 
-        public UnitOfWork(islahiniDbContext dbContext)
+        public UnitOfWork(islahiniDbContext dbContext, ITecnicianRepo tecnicianRepo )
         {
             this.dbContext = dbContext;
+            this.tecnicianRepo = tecnicianRepo;
         }
 
-        
+        public ITecnicianRepo tecnicianRepo { get; }
+
         public IGenericRepo<T> GetRepo<T>() where T : class, new()
         {
             var entity = typeof(T);

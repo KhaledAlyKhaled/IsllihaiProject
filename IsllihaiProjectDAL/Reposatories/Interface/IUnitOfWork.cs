@@ -9,7 +9,7 @@ namespace IsllihaiProjectDAL.Reposatories.Interface
     public interface IUnitOfWork
     {
         IGenericRepo<T> GetRepo<T>() where T : class, new();
-
+        public ITecnicianRepo tecnicianRepo { get; }
         int SaveChanges ();
     }
 }
