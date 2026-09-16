@@ -1,0 +1,40 @@
+﻿@model CaregoryCreatedViewModel
+
+@{
+    ViewData["Title"] = "تعديل تصنيف";
+    Layout = "_Layout";
+}
+
+<main class="admin-main">
+    <div class="admin-topbar">
+        <div>
+            <h2>تعديل تصنيف</h2>
+            <p>#@ViewData["CategoryId"]</p>
+        </div>
+    </div>
+
+    <div class="crud-form">
+        <h3>بيانات التصنيف</h3>
+        <p class="hint">القيمة الحالية معبّية من CategoryToUpdate(id).</p>
+
+        <form asp-controller="AdminCategorey" asp-action="Edit" asp-route-id="@ViewData["CategoryId"]" method="post">
+            <div asp-validation-summary="ModelOnly" class="field-error"></div>
+
+            <div class="field">
+                <label asp-for="Name">اسم التصنيف</label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class="field-error"></span>
+                <div class="field-hint">افتكر: فحص التكرار لازم يستثني نفس الصف ده (x.Id != Id)</div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-amber">حفظ التعديلات</button>
+                <a asp-controller="AdminCategorey" asp-action="Index" class="btn btn-ghost">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,5 +1,6 @@
 ﻿using IsllihaiProjectBL.Services.Interfaces;
 using IsllihaiProjectBL.ViewModels.CategoryViewModels;
+using IsllihaiProjectBL.ViewModels.TechnicainViewModels;
 using IsllihaiProjectDAL.Entities;
 using IsllihaiProjectDAL.Reposatories.Interface;
 using System;
@@ -123,6 +124,68 @@ namespace IsllihaiProjectBL.Services.Classes
             unitOfWork.GetRepo<Category>().Delete(RemoveTheMember);
             return unitOfWork.SaveChanges() > 0;
         }
+
+        public IEnumerable<CategoryWithNumbersViewModel> GetAllCateGoriesWithNumbers()
+        {
+            var categoreyForAdmin = unitOfWork.categoreyRepo.GetAllWithTechAndBooking();
+            if (categoreyForAdmin is null)
+                return Enumerable.Empty<CategoryWithNumbersViewModel>();
+
+            var CatToReturn = categoreyForAdmin.Select(x => new CategoryWithNumbersViewModel
+            {
+                CategoryName = x.Name,
+                NumberOfBookings =x.Bookings.Count(),
+                NumberOfTechnicains = x.Technicans.Count()
+                
+            });
+            return CatToReturn;
+        }
+
+        public IEnumerable<CategoreyForAdminViewModel> GetAllCateGoriesForAdmin()
+        {
+            
+            var Category = unitOfWork.GetRepo<Category>().GetAll() ?? [];
+
+
+            var CategoryViewModels = Category.Select(x => new CategoreyForAdminViewModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                NumberOfBooking = x.Bookings.Count(),
+                NumberOfTechnicains= x.Technicans.Count(),
+                NumberOfCategories = unitOfWork.GetRepo<Category>().GetAll().Count()
+            }
+              );
+            return CategoryViewModels;
+
+        }
+
+        public CategoreyTechesViewModel GetAllTechesForCastegorey(int id)
+        {
+            var Cate = unitOfWork.categoreyRepo.GetByIdWithTechAndBooking(id);
+            if (Cate is null)
+                return null;
+
+            var Tech = new CategoreyTechesViewModel 
+            {
+                Id =Cate.Id,
+                Name=Cate.Name,
+                NumberOfBookings =Cate.Bookings.Count(),
+                NumberOfTechnicians = Cate.Technicans.Count(),
+                Technicians = Cate.Technicans.Select(t => new TechnicainViewModel
+                {
+                    Id = t.Id,
+                    TechnicainName = t.User.name,
+                    YearsOfExperince = t.YearsOfExperience,
+                    AVGRating = t.AvgRating,
+                    IsVertifed = t.IsVertified,
+                    CategoryName = Cate.Name
+                })
+            };
+
+            return Tech;
+        }
     }
     }
+    
 

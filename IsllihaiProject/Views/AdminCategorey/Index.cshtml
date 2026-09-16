@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CategoreyForAdminViewModel>
+
+@{
+    ViewData["Title"] = "التصنيفات";
+    Layout = "_Layout";
+}
+
+<main class="admin-main">
+    <div class="admin-topbar">
+        <div>
+            <h2>التصنيفات</h2>
+            <p>@Model.Count() تصنيفات مسجلة</p>
+        </div>
+        <a asp-controller="AdminCategorey" asp-action="Create" class="btn btn-amber btn-sm">+ تصنيف جديد</a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <table class="admin-table">
+            <thead>
+                <tr><th>#</th><th>اسم التصنيف</th><th>عدد الفنيين</th><th>عدد الطلبات</th><th></th></tr>
+            </thead>
+            <tbody>
+                @foreach (var cat in Model)
+                {
+                    <tr>
+                        <td class="mono">@cat.Id</td>
+                        <td class="mono">@cat.Name</td>
+                        <td class="mono">@cat.NumberOfTechnicains</td>
+                        <td class="mono">@cat.NumberOfBooking</td>
+                        <td>
+                            <div class="row-actions">
+                                <a asp-controller="AdminCategorey" asp-action="CategoreyDetails" asp-route-id="@cat.Id" class="icon-btn" title="التفاصيل">👁</a>
+                                <a asp-controller="AdminCategorey" asp-action="Edit" asp-route-id="@cat.Id" class="icon-btn" title="تعديل">✎</a>
+                                <a asp-controller="AdminCategorey" asp-action="Delete" asp-route-id="@cat.Id" class="icon-btn danger" title="حذف">✕</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="ico">📁</div>
+            <p>مفيش تصنيفات مسجلة لسه</p>
+            <a asp-controller="AdminCategorey" asp-action="Create" class="btn btn-amber btn-sm" style="margin-top:14px; display:inline-flex;">+ أضف أول تصنيف</a>
+        </div>
+    }
+</main>

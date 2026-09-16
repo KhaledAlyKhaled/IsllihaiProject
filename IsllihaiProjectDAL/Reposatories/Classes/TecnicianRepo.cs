@@ -19,11 +19,26 @@ namespace IsllihaiProjectDAL.Reposatories.Classes
             this.dbContext = dbContext;
         }
 
-        public IEnumerable<Technican> GetAllTechnicainWithUserInfos()
+        public IEnumerable<Technican> GetAllTechnicainWithUserInfos(Func<Technican, bool>? conditain = null)
         {
+            if (conditain is null)
             return dbContext.Technican.Include(x =>x.User)
                                       .Include(x=>x.Category)
+                                      .AsNoTracking()
                                       .ToList();
+            else
+                return dbContext.Technican.Include(x => x.User)
+                                      .Include(x => x.Category)
+                                      .AsNoTracking()
+                                      .Where(conditain)
+                                      .ToList();
+        }
+
+        public Technican GetTechnicanById(int id)
+        {
+            return dbContext.Technican.Include(x => x.User)
+                                      .Include(x => x.Category)
+                                      .FirstOrDefault(x=>x.Id == id);
         }
     }
 }

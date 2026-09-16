@@ -9,6 +9,7 @@ namespace IsllihaiProjectDAL.Reposatories.Interface
 {
     public interface ITecnicianRepo :IGenericRepo<Technican>
     {
-        IEnumerable<Technican> GetAllTechnicainWithUserInfos();
+        IEnumerable<Technican> GetAllTechnicainWithUserInfos(Func<Technican , bool>? conditain = null);
+        Technican GetTechnicanById(int id);
     }
 }

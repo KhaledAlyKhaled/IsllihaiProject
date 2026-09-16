@@ -9,6 +9,7 @@ namespace IsllihaiProjectDAL.Entities.Enums
     public enum Roles
     {
         Technican ,
-        Customuer
+        Customuer ,
+        Admin
     }
 }

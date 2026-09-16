@@ -1,3 +1,5 @@
+using IsllihaiProjectBL.Services.Classes;
+using IsllihaiProjectBL.Services.Interfaces;
 using IsllihaiProjectDAL.Contexts;
 using IsllihaiProjectDAL.Reposatories.Classes;
 using IsllihaiProjectDAL.Reposatories.Interface;
@@ -15,6 +17,12 @@ options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"
 //builder.Services.AddScoped(typeof (IGenericRepo<>), typeof (GenericRepo<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ITecnicianRepo , TecnicianRepo>();
+builder.Services.AddScoped<IBookingRepo , BookingRepo>();
+builder.Services.AddScoped<ICategoreyRepo , CategoreyRepo>();
+
+builder.Services.AddScoped<ICategoryService, CategoryServcie>();
+builder.Services.AddScoped<ITechnicainService, TechnicainService>();
+builder.Services.AddScoped<IBookingServices, BookingService>();
 //
 var app = builder.Build();
 

@@ -1,0 +1,26 @@
+﻿@model CategoreyTechesViewModel
+
+<div class="details-card">
+    <h3>@Model.Name</h3>
+    <div class="stamp-row">
+        <div class="item"><b>@Model.NumberOfTechnicians</b><span>فني مسجل</span></div>
+        <div class="item"><b>@Model.NumberOfBookings</b><span>طلب إجمالي</span></div>
+    </div>
+</div>
+
+<table class="admin-table">
+    <thead>
+        <tr><th>الاسم</th><th>سنين الخبرة</th><th>التقييم</th><th>الحالة</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var tech in Model.Technicians)
+        {
+            <tr>
+                <td>@tech.TechnicainName</td>
+                <td class="mono">@tech.YearsOfExperince</td>
+                <td class="mono">⭐ @tech.AVGRating</td>
+                <td>@(tech.IsVertifed ? "موثّق" : "X")</td>
+            </tr>
+        }
+    </tbody>
+</table>

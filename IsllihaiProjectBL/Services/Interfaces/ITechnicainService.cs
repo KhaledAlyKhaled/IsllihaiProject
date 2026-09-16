@@ -11,5 +11,12 @@ namespace IsllihaiProjectBL.Services.Interfaces
     public interface ITechnicainService
     {
         IEnumerable <TechnicainViewModel> GetAllTechnicans ();
+        bool VerifyTechnician(int Id);
+        UpdatedTechnicainViewModel TechnicainToUpdate (int Id);
+        bool UpdateTechnicaian (int Id,UpdatedTechnicainViewModel model);
+        TechnicainViewModel GetTechnicainById (int Id);
+        IEnumerable<TechnicainViewModel> SearchTechnicains(int CategoryId, double MinRating, string Address);
+        IEnumerable<TechnicainViewModel> GetAllTechnicansForSpecificCategoreyForAdmin(int CategoreyId);
+
     }
 }

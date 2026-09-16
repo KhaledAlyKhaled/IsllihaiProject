@@ -10,6 +10,8 @@ namespace IsllihaiProjectDAL.Reposatories.Interface
     {
         IGenericRepo<T> GetRepo<T>() where T : class, new();
         public ITecnicianRepo tecnicianRepo { get; }
+        public IBookingRepo bookingRepo { get; }
+        public ICategoreyRepo categoreyRepo { get; }
         int SaveChanges ();
     }
 }

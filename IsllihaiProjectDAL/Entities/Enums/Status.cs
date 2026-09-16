@@ -8,8 +8,6 @@ namespace IsllihaiProjectDAL.Entities.Enums
 {
     public enum Status
     {
-        wd,
-         sd,
-        asd
+        Pending, Accepted, Rejected, InProgress, Completed, Cancelled
     }
 }

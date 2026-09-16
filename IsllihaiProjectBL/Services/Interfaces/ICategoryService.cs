@@ -15,5 +15,8 @@ namespace IsllihaiProjectBL.Services.Interfaces
         CaregoryCreatedViewModel? CategoryToUpdate(int id);
         bool UpdateCategory(int Id,CaregoryCreatedViewModel category);
         bool DeleteCategory(int Id);
+        IEnumerable<CategoryWithNumbersViewModel> GetAllCateGoriesWithNumbers();
+        IEnumerable<CategoreyForAdminViewModel> GetAllCateGoriesForAdmin();
+        CategoreyTechesViewModel? GetAllTechesForCastegorey(int id);
     }
 }
