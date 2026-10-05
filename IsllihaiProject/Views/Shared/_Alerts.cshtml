@@ -1,0 +1,14 @@
+﻿@if (TempData["Success"] is string ok)
+{
+    <div class="delete-warning" style="border-color:var(--success); background:rgba(74,157,110,.08);">
+        <span class="ico" style="color:var(--success);">✓</span>
+        <div><strong>@ok</strong></div>
+    </div>
+}
+@if (TempData["Fail"] is string fail)
+{
+    <div class="delete-warning">
+        <span class="ico">⚠</span>
+        <div><strong>@fail</strong></div>
+    </div>
+}

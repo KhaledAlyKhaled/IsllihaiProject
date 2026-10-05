@@ -62,7 +62,7 @@ namespace IsllihaiProjectBL.Services.Classes
 
         public CaregoryViewModel? GetCategoryById(int id)
         {
-            var category = unitOfWork.GetRepo<Category>().GetById(id);
+            var category = unitOfWork.categoreyRepo.GetByIdWithTechAndBooking(id);
 
             if (category is null) 
                 return null;
@@ -184,6 +184,26 @@ namespace IsllihaiProjectBL.Services.Classes
             };
 
             return Tech;
+        }
+
+        public CategoreyForAdminViewModel GetCategoreyDetailsToDelete(int id)
+        {
+            var category = unitOfWork.categoreyRepo.GetByIdWithTechAndBooking(id);
+
+            if (category is null)
+                return null;
+
+            var ViewModel = new CategoreyForAdminViewModel
+            {
+                Id = category.Id,
+                Name = category.Name,
+                NumberOfCategories =0,
+                NumberOfBooking = category.Bookings.Count(),
+                NumberOfTechnicains = category.Technicans.Count(),
+               
+            }
+            ;
+            return ViewModel;
         }
     }
     }

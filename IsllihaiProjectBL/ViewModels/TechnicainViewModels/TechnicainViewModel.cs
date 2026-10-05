@@ -14,6 +14,7 @@ namespace IsllihaiProjectBL.ViewModels.TechnicainViewModels
         public int YearsOfExperince { get; set; }
         public double AVGRating {  get; set; }
         public bool IsVertifed { get; set; }
+        public int? CategoreyId { get; set; }
 
     }
 }

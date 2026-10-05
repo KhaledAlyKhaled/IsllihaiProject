@@ -14,5 +14,9 @@ namespace IsllihaiProjectBL.ViewModels.BookingViewModels
         public string CustomerName { get; set; }
         public DateTime StartDate { get; set; }
         public string Status { get; set; }
+        public string? Adress { get; set; }
+        public string? Description { get; set; }
+        public int? Price { get; set; }
+
     }
 }

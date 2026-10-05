@@ -1,0 +1,31 @@
+﻿@model IEnumerable<CaregoryViewModel>
+
+@{
+    ViewData["Title"] = "الأقسام";
+}
+
+<section>
+    <div class="container">
+        <div class="section-head">
+            <h2>تصفح الأقسام</h2>
+            <p>اختار القسم اللي محتاج فيه فني.</p>
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="grid-4">
+                @foreach (var cat in Model)
+                {
+                    <a asp-controller="Technician" asp-action="Search" asp-route-categoryId="@cat.Id" class="cat-card">
+                        <h3>@cat.Name</h3>
+                        <p>شوف الفنيين المتاحين</p>
+                    </a>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state"><p>مفيش أقسام متاحة دلوقتي</p></div>
+        }
+    </div>
+</section>

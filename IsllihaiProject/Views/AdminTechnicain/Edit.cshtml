@@ -1,0 +1,47 @@
+﻿@model UpdatedTechnicainViewModel
+
+@{
+    ViewData["Title"] = "تعديل بيانات الفني";
+    Layout = "_AdminLayout";
+    var id = ViewContext.RouteData.Values["id"];
+}
+
+<main class="admin-main">
+    <div class="admin-topbar">
+        <div>
+            <h2>تعديل بيانات الفني</h2>
+            <p>#@id</p>
+        </div>
+    </div>
+
+    <div class="crud-form" style="max-width:640px;">
+        <h3>بيانات البروفايل</h3>
+        <p class="hint">الاسم والإيميل بيتعدلوا من حساب الفني نفسه، مش من هنا.</p>
+
+        <form asp-controller="AdminTechnicain" asp-action="Edit" asp-route-id="@id" method="post">
+            <div asp-validation-summary="ModelOnly" class="field-error"></div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                <div class="field">
+                    <label asp-for="CategoryId">التصنيف</label>
+                    <select asp-for="CategoryId" asp-items="@(ViewBag.Categories as SelectList)"></select>
+                    <span asp-validation-for="CategoryId" class="field-error"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="YearsOfExperiance">سنين الخبرة</label>
+                    <input asp-for="YearsOfExperiance" type="number" min="0" max="20" />
+                    <span asp-validation-for="YearsOfExperiance" class="field-error"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-amber">حفظ التعديلات</button>
+                <a asp-controller="AdminTechnicain" asp-action="Index" class="btn btn-ghost">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

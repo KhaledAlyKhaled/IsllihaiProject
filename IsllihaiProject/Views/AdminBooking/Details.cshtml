@@ -1,0 +1,32 @@
+﻿@model BookingAdminViewModel
+
+@{
+    ViewData["Title"] = "تفاصيل الطلب";
+    Layout = "_AdminLayout";
+}
+
+<main class="admin-main">
+    <div class="admin-topbar">
+        <div>
+            <h2>تفاصيل الطلب #@Model.Id</h2>
+            <p>عرض كامل — مفيش تعديل من هنا</p>
+        </div>
+        <a asp-controller="AdminBooking" asp-action="Index" class="btn btn-ghost btn-sm">رجوع للقائمة</a>
+    </div>
+
+    <div class="details-card">
+        <h3 class="display" style="font-size:19px; margin-bottom:16px;">بيانات الطلب</h3>
+
+        <div class="delete-info-row"><span>العميل</span><span>@Model.CustomerName</span></div>
+        <div class="delete-info-row"><span>الفني</span><span>@(Model.TechName ?? "—")</span></div>
+        <div class="delete-info-row"><span>التصنيف</span><span>@Model.CategoryName</span></div>
+        <div class="delete-info-row"><span>الموعد</span><span class="mono">@Model.StartDate.ToString("d MMM yyyy, h:mm tt")</span></div>
+        <div class="delete-info-row"><span>العنوان</span><span>@(Model.Adress ?? "—")</span></div>
+        <div class="delete-info-row"><span>السعر التقديري</span><span class="mono">@(Model.Price is not null ? $"{Model.Price} ج.م" : "—")</span></div>
+        <div class="delete-info-row"><span>الحالة الحالية</span><span><span class="status-pill">@Model.Status</span></span></div>
+        <div class="delete-info-row" style="border-bottom:none;">
+            <span>وصف المشكلة</span>
+            <span style="max-width:320px; text-align:left; color:var(--text-dim);">@(Model.Description ?? "—")</span>
+        </div>
+    </div>
+</main>

@@ -1,5 +1,6 @@
 ﻿using IsllihaiProjectBL.Services.Interfaces;
 using IsllihaiProjectBL.ViewModels.TechnicainViewModels;
+using IsllihaiProjectBL.ViewModels.WapperedViewModel;
 using IsllihaiProjectDAL.Entities;
 using IsllihaiProjectDAL.Reposatories.Interface;
 using System;
@@ -156,6 +157,62 @@ namespace IsllihaiProjectBL.Services.Classes
             }
 
         }
-        
+        public bool UpdateAverageRating(int technicianId)
+        {
+            var technician = unitOfWork.tecnicianRepo.GetTechnicanById(technicianId);
+            if (technician is null)
+                return false;
+
+            var reviews = unitOfWork.reviewRepo.GetReviewsByTechnicianId(technicianId);
+            if (!reviews.Any())
+                return false;
+
+            technician.AvgRating = reviews.Average(r => r.Rating);
+
+            try
+            {
+                unitOfWork.GetRepo<Technican>().Update(technician);
+                return unitOfWork.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public TechnicianDetailsPageViewModel? GetForDetailsPage(int id)
+        {
+            var tec = unitOfWork.tecnicianRepo.GetTechnicanById(id);
+            if (tec is null)
+                return null;
+
+            var review = unitOfWork.reviewRepo.GetReviewsByTechnicianId(id);
+
+            var details = new TechnicianDetailsPageViewModel
+            {
+                technicainViewModel = new TechnicainViewModel
+                {
+                    TechnicainName = tec.User.name,
+                    Id = id,
+                    AVGRating =tec.AvgRating,
+                    CategoreyId = tec.CategoryId,
+                    CategoryName = tec.Category.Name,
+                    IsVertifed = tec.IsVertified ,
+                    YearsOfExperince =tec.YearsOfExperience
+                }
+                ,
+                reviewViewModels = review.Select(x=> new ViewModels.ReviewViewModels.ReviewViewModel
+                {
+                    Id = x.Id,
+                    Comment = x.Comment,
+                    CreatedAt = x.CreatedAt,
+                    CustomerName =x.Booking.User.name,
+                    Rating = x.Rating,
+                })
+                
+            };
+
+            return details;
+        }
     }
 }

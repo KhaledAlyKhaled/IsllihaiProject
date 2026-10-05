@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "غير مسموح";
+    Layout = null;
+}
+
+<section>
+    <div class="container">
+        <div class="form-shell" style="text-align:center;">
+            <div style="font-size:44px; margin-bottom:10px;">🚫</div>
+            <h3 class="display" style="margin-bottom:8px;">مش مسموحلك تدخل الصفحة دي</h3>
+            <p style="color:var(--text-dim); font-size:14.5px; margin-bottom:24px;">حسابك الحالي معندوش صلاحية لده. لو شايف إن ده غلط، سجّل دخول بحساب تاني.</p>
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-amber">الرئيسية</a>
+                <a asp-controller="Account" asp-action="Login" class="btn btn-ghost">حساب تاني</a>
+            </div>
+        </div>
+    </div>
+</section>

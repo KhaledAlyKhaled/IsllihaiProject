@@ -1,0 +1,48 @@
+﻿@model CategoreyForAdminViewModel
+
+@{
+    ViewData["Title"] = "حذف تصنيف";
+    Layout = "_AdminLayout";
+}
+
+<main class="admin-main">
+    <div class="admin-topbar">
+        <div>
+            <h2>حذف تصنيف</h2>
+            <p>تأكيد قبل الحذف النهائي</p>
+        </div>
+    </div>
+
+    <div class="crud-form">
+        <h3>@Model.Name</h3>
+        <p class="hint">#@Model.Id</p>
+
+        @if (Model.NumberOfTechnicains > 0 || Model.NumberOfBooking > 0)
+        {
+            <div class="delete-warning">
+                <span class="ico">⚠</span>
+                <div>
+                    <strong>مينفعش تحذف التصنيف ده</strong>
+                    <p>مرتبط بـ @Model.NumberOfTechnicains فني و@Model.NumberOfBooking طلب. لازم تنقل الفنيين لتصنيف تاني الأول.</p>
+                </div>
+            </div>
+        }
+
+        <div class="delete-info-row"><span>عدد الفنيين المرتبطين</span><span class="mono">@Model.NumberOfTechnicains</span></div>
+        <div class="delete-info-row"><span>عدد الطلبات المرتبطة</span><span class="mono">@Model.NumberOfBooking</span></div>
+
+        <form asp-controller="AdminCategorey" asp-action="DeleteConfirm" asp-route-id="@Model.Id" method="post">
+            <div class="form-actions">
+                @if (Model.NumberOfTechnicains > 0 || Model.NumberOfBooking > 0)
+                {
+                    <button type="submit" class="btn btn-danger" disabled title="مش متاح — فيه بيانات مرتبطة">حذف نهائي</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-danger">حذف نهائي</button>
+                }
+                <a asp-controller="AdminCategorey" asp-action="Index" class="btn btn-ghost">رجوع</a>
+            </div>
+        </form>
+    </div>
+</main>

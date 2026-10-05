@@ -1,0 +1,53 @@
+﻿@model IEnumerable<BookingViewModel>
+
+@{
+    ViewData["Title"] = "طلباتي";
+    var userId = ViewContext.RouteData.Values["id"] ?? 1;
+}
+
+<section>
+    <div class="container">
+        <h2 class="display" style="margin-bottom:24px;">طلباتي</h2>
+
+        @if (Model.Any())
+        {
+            <div style="display:grid; gap:14px;">
+                @foreach (var b in Model)
+                {
+                    <div class="ticket">
+                        <div class="ticket-head">
+                            <span class="code mono">#@b.Id · @b.CategoryName</span>
+                            <partial name="_StatusBadge" model="b.Status" />
+                        </div>
+                        <div class="ticket-body">
+                            <div class="ticket-row"><span>الفني</span><span>@(b.TechName ?? "لسه مش محدد")</span></div>
+                            <div class="ticket-row"><span>الموعد</span><span>@b.StartDate.ToString("d MMM yyyy")</span></div>
+                            <div class="ticket-row" style="border:none; padding-bottom:0;"><span>العنوان</span><span>@b.Address</span></div>
+                        </div>
+                        @if (b.Status != "Cancelled" && b.Status != "Rejected")
+                        {
+                            <div class="ticket-foot">
+                                @if (b.Status == "Completed")
+                                {
+                                    <a asp-controller="Review" asp-action="Create" asp-route-bookingId="@b.Id" class="btn btn-amber btn-sm" style="flex:1;">قيّم الفني</a>
+                                }
+                                else
+                                {
+                                    <form asp-controller="Booking" asp-action="Cancel" method="post" style="flex:1;">
+                                        <input type="hidden" name="bookingid" value="@b.Id" />
+                                        <input type="hidden" name="userId" value="@userId" />
+                                        <button type="submit" class="btn btn-ghost btn-sm" style="width:100%;">إلغاء الطلب</button>
+                                    </form>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state"><p>مفيش طلبات لسه</p></div>
+        }
+    </div>
+</section>

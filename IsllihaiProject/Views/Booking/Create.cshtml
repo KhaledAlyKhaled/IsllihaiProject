@@ -1,0 +1,53 @@
+﻿@model CreatedBookingViewModel
+
+@{
+    ViewData["Title"] = "إنشاء طلب";
+    var tech = ViewBag.Technician as TechnicainViewModel;
+}
+
+<section>
+    <div class="container">
+        <div class="form-shell">
+            <h3 style="text-align:center; margin-bottom:8px;">إنشاء طلب جديد</h3>
+            @if (tech is not null)
+            {
+                <p style="text-align:center; color:var(--text-dim); margin-bottom:20px;">الفني: @tech.TechnicainName — @tech.CategoryName</p>
+            }
+
+            <form asp-controller="Booking" asp-action="Create" method="post">
+                @* TODO: userid=1 مؤقت لحد الـ Identity *@
+                <input type="hidden" name="userid" value="1" />
+                <input type="hidden" asp-for="TechnicanId" />
+                <input type="hidden" asp-for="CategoryId" />
+
+                <div asp-validation-summary="ModelOnly" class="field-error"></div>
+
+                <div class="field">
+                    <label asp-for="Description">وصف المشكلة</label>
+                    <textarea asp-for="Description" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="field-error"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="Address">العنوان بالتفصيل</label>
+                    <input asp-for="Address" />
+                    <span asp-validation-for="Address" class="field-error"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="OrderedAt">التاريخ والوقت المفضل</label>
+                    <input asp-for="OrderedAt" type="datetime-local" />
+                    <span asp-validation-for="OrderedAt" class="field-error"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="price">السعر المقترح (اختياري)</label>
+                    <input asp-for="price" type="number" />
+                </div>
+
+                <button type="submit" class="btn btn-amber btn-block">تأكيد الطلب</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

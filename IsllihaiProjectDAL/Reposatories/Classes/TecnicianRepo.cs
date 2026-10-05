@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,14 +13,14 @@ namespace IsllihaiProjectDAL.Reposatories.Classes
 {
     public class TecnicianRepo : GenericRepo<Technican> ,ITecnicianRepo
     {
-        private readonly islahiniDbContext dbContext;
+        private readonly IslahiniDbContext dbContext;
 
-        public TecnicianRepo(islahiniDbContext dbContext) : base(dbContext)
+        public TecnicianRepo(IslahiniDbContext dbContext) : base(dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public IEnumerable<Technican> GetAllTechnicainWithUserInfos(Func<Technican, bool>? conditain = null)
+        public IEnumerable<Technican> GetAllTechnicainWithUserInfos(Expression<Func<Technican, bool>>? conditain = null)
         {
             if (conditain is null)
             return dbContext.Technican.Include(x =>x.User)

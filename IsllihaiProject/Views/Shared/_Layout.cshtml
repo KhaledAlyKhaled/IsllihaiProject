@@ -3,35 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"] — لوحة الأدمن | إصلحلي</title>
-    <link rel="stylesheet" href="~/css/style.css">
+    <title>@ViewData["Title"] — إصلحلي</title>
+    <link rel="stylesheet" href="~/css/Site/style.css">
 </head>
 <body class="blueprint">
 
     <header class="site">
         <div class="bar">
             <a asp-controller="Home" asp-action="Index" class="brand"><span class="mark"><span>ص</span></span> إصلحلي</a>
+            <nav class="main-nav">
+                <a asp-controller="Home" asp-action="Index">الرئيسية</a>
+                <a asp-controller="CustomerCategorey" asp-action="Index">الأقسام</a>
+                @* TODO: الأرقام (1) دي مؤقتة لحد الـ Identity، وبعدها بتتشال والروابط بتتحدد حسب الدور *@
+                <a asp-controller="Booking" asp-action="MyBookings" asp-route-id="1">طلباتي</a>
+                <a asp-controller="TechnicianJobs" asp-action="MyJobs" asp-route-id="1">طلبات الفني</a>
+                <a asp-controller="AdminCategorey" asp-action="Index">لوحة الأدمن</a>
+            </nav>
             <div class="header-actions">
-                <a asp-controller="Home" asp-action="Index" class="btn btn-ghost btn-sm">🏠 الموقع الرئيسي</a>
-                <span class="mono" style="font-size:12.5px; color:var(--text-dim); margin-right:8px;">لوحة الأدمن</span>
+                <a class="btn btn-ghost btn-sm" asp-controller="Account" asp-action="Login">دخول</a>
             </div>
         </div>
     </header>
 
-    <div class="admin-shell">
-        <aside class="admin-nav">
-            <div class="group-label mono">الإدارة</div>
-            <a asp-controller="AdminCategorey" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "ACategorey" ? "active" : "")">📁 التصنيفات</a>
-            <a asp-controller="AdminTechnicain" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Technicain" ? "active" : "")">🛠 الفنيين</a>
-            <a asp-controller="AdminBooking" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Booking" ? "active" : "")">📋 الطلبات</a>
-        </aside>
-
-        @RenderBody()
+    <div class="container" style="padding-top:20px;">
+        <partial name="_Alerts" />
     </div>
 
+    @RenderBody()
+
+    <footer>
+        <div class="container foot-grid">
+            <span>© 2026 إصلحلي</span>
+        </div>
+    </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<TechnicainViewModel>
+
+@{
+    ViewData["Title"] = "الفنيين";
+    Layout = "_AdminLayout";
+}
+
+<main class="admin-main">
+    <div class="admin-topbar">
+        <div>
+            <h2>الفنيين</h2>
+            <p>@Model.Count() فني مسجل</p>
+        </div>
+    </div>
+
+    <partial name="_Alerts" />
+
+    @if (Model.Any())
+    {
+        <table class="admin-table">
+            <thead>
+                <tr><th>#</th><th>الاسم</th><th>التصنيف</th><th>سنين الخبرة</th><th>التقييم</th><th>الحالة</th><th></th></tr>
+            </thead>
+            <tbody>
+                @foreach (var tech in Model)
+                {
+                    <tr>
+                        <td class="mono">@tech.Id</td>
+                        <td>@tech.TechnicainName</td>
+                        <td>@tech.CategoryName</td>
+                        <td class="mono">@tech.YearsOfExperince</td>
+                        <td class="mono">⭐ @tech.AVGRating.ToString("0.0")</td>
+                        <td>
+                            @if (tech.IsVertifed)
+                            {
+                                <span class="badge-verified">موثّق</span>
+                            }
+                            else
+                            {
+
+                                <span class="badge-unverified">غير موثّق</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="row-actions">
+                                <form asp-controller="AdminTechnicain" asp-action="Verify" asp-route-id="@tech.Id" method="post" style="display:inline;">
+                                    @if (tech.IsVertifed)
+                                    {
+                                        <button type="submit" class="btn btn-ghost btn-sm">إلغاء التوثيق</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-teal btn-sm">✓ وثّق</button>
+                                    }
+                                </form>
+                                <a asp-controller="AdminTechnicain" asp-action="Edit" asp-route-id="@tech.Id" class="icon-btn" title="تعديل">✎</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="ico">🛠</div>
+            <p>مفيش فنيين مسجلين لسه</p>
+        </div>
+    }
+</main>

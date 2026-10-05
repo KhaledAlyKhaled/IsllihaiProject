@@ -161,6 +161,29 @@ namespace IsllihaiProjectBL.Services.Classes
             return BookingToReturn;
         }
 
+        public BookingAdminViewModel GetBookingDetails(int BookingId)
+        {
+            var AllBookings = unitOfWork.bookingRepo.GetAllWithCategoryAndUSerAndTech(BookingId);
+            if (AllBookings is null)
+                return null;
+
+            var BookingViewModelToReturn =  new BookingAdminViewModel
+            {
+                Id = AllBookings.Id,
+                Adress = AllBookings.Address.ToString(),
+                CategoryName = AllBookings.Category.Name,
+                CustomerName = AllBookings.User.name,
+                Description = AllBookings.Description,
+                StartDate= AllBookings.OrderedAt.Date,
+                Status = AllBookings.Status.ToString(),
+                Price = AllBookings.price,
+                TechName = AllBookings.Technican.User.name
+                
+            };
+
+            return BookingViewModelToReturn;
+        }
+
         public bool RejectTheBooking(int BookingId, int TechnicainId)
         {
             var booking = unitOfWork.bookingRepo.GetById(BookingId);

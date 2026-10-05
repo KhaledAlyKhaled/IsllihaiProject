@@ -12,6 +12,7 @@ namespace IsllihaiProjectDAL.Reposatories.Interface
         public ITecnicianRepo tecnicianRepo { get; }
         public IBookingRepo bookingRepo { get; }
         public ICategoreyRepo categoreyRepo { get; }
+        public IReviewRepo reviewRepo { get; }
         int SaveChanges ();
     }
 }

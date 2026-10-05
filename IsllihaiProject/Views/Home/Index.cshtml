@@ -1,8 +1,31 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "الرئيسية";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero">
+    <div class="container hero-grid">
+        <div>
+            <div class="eyebrow">منصة صيانة منزلية موثوقة</div>
+            <h1 class="hero-title display">فنيك يوصلك<br><em>من غير ما تدور</em> عليه</h1>
+            <p class="hero-sub">اطلب سباك، كهربائي، نجار، أو فني تكييف. تابع حالة الطلب لحظة بلحظة، وقيّم الفني بعد ما الشغل يخلص.</p>
+            <div class="hero-actions">
+                <a asp-controller="CustomerCategorey" asp-action="Index" class="btn btn-amber">تصفح الأقسام</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="how">
+    <div class="container">
+        <div class="section-head">
+            <h2>إزاي بيشتغل</h2>
+            <p>أربع خطوات بس من الطلب لحد التقييم.</p>
+        </div>
+        <div class="steps">
+            <div class="step"><span class="n mono">01</span><h4>اختار القسم</h4><p>حدد نوع العطل والفني المناسب.</p></div>
+            <div class="step"><span class="n mono">02</span><h4>احجز ميعاد</h4><p>اكتب المشكلة والعنوان والوقت المناسب.</p></div>
+            <div class="step"><span class="n mono">03</span><h4>تابع الحالة</h4><p>مقبول، قيد التنفيذ، مكتمل.</p></div>
+            <div class="step"><span class="n mono">04</span><h4>قيّم الشغل</h4><p>بعد ما الفني يخلص، اكتب رأيك.</p></div>
+        </div>
+    </div>
+</section>

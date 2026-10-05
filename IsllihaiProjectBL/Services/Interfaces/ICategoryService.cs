@@ -18,5 +18,7 @@ namespace IsllihaiProjectBL.Services.Interfaces
         IEnumerable<CategoryWithNumbersViewModel> GetAllCateGoriesWithNumbers();
         IEnumerable<CategoreyForAdminViewModel> GetAllCateGoriesForAdmin();
         CategoreyTechesViewModel? GetAllTechesForCastegorey(int id);
+        CategoreyForAdminViewModel GetCategoreyDetailsToDelete (int id);
+        
     }
 }

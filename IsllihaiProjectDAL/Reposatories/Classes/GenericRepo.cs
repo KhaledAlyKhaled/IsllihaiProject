@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,9 +12,9 @@ namespace IsllihaiProjectDAL.Reposatories.Classes
 {
     public class GenericRepo<T> : IGenericRepo<T> where T : class , new()
     {
-        private readonly islahiniDbContext _DbContext;
+        private readonly IslahiniDbContext _DbContext;
 
-        public GenericRepo(islahiniDbContext dbContext)
+        public GenericRepo(IslahiniDbContext dbContext)
         {
             _DbContext = dbContext;
         }
@@ -28,7 +29,7 @@ namespace IsllihaiProjectDAL.Reposatories.Classes
             
         }
 
-        public IEnumerable<T> GetAll(Func<T, bool>? condetion = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? condetion = null)
         {
             if (condetion is null)
                 return _DbContext.Set<T>().AsNoTracking().ToList();

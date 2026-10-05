@@ -18,7 +18,7 @@ namespace IsllihaiProjectDAL.Entities
         public Status Status { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
         public int? TechnicanId { get; set; }
         public Technican? Technican { get; set; }
         public int CategoryId { get; set; }

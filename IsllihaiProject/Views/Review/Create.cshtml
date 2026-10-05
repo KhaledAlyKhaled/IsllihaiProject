@@ -1,0 +1,43 @@
+﻿@model CreateReviewViewModel
+
+@{
+    ViewData["Title"] = "تقييم الفني";
+}
+
+<section>
+    <div class="container">
+        <div class="form-shell">
+            <h3 style="text-align:center; margin-bottom:20px;">قيّم تجربتك</h3>
+
+            <form asp-controller="Review" asp-action="Create" asp-route-bookingId="@Context.Request.Query["bookingId"]" method="post">
+                @* TODO: userid=1 مؤقت لحد الـ Identity *@
+                <input type="hidden" name="userid" value="1" />
+
+                <div asp-validation-summary="ModelOnly" class="field-error"></div>
+
+                <div class="field">
+                    <label asp-for="Rating">التقييم</label>
+                    <select asp-for="Rating">
+                        <option value="5">5 — ممتاز</option>
+                        <option value="4">4 — جيد جدًا</option>
+                        <option value="3">3 — جيد</option>
+                        <option value="2">2 — مقبول</option>
+                        <option value="1">1 — ضعيف</option>
+                    </select>
+                    <span asp-validation-for="Rating" class="field-error"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="Comment">تعليقك (اختياري)</label>
+                    <textarea asp-for="Comment" rows="3"></textarea>
+                    <span asp-validation-for="Comment" class="field-error"></span>
+                </div>
+
+                <button type="submit" class="btn btn-amber btn-block">إرسال التقييم</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

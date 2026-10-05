@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TechnicainViewModel>
+
+@{
+    ViewData["Title"] = "الفنيين المتاحين";
+    var categoryId = Context.Request.Query["categoryId"].ToString();
+    var city = Context.Request.Query["city"].ToString();
+    var minRating = Context.Request.Query["minRating"].ToString();
+}
+
+<section>
+    <div class="container">
+        <div class="section-head">
+            <h2>الفنيين المتاحين</h2>
+            <p>@Model.Count() فني</p>
+        </div>
+
+        <form method="get" asp-controller="Technician" asp-action="Search" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:28px;">
+            <input type="hidden" name="categoryId" value="@categoryId" />
+            <div class="field" style="margin:0; min-width:200px;">
+                <input type="text" name="city" value="@city" placeholder="المنطقة (اختياري)" />
+            </div>
+            <div class="field" style="margin:0; min-width:180px;">
+                <select name="minRating">
+                    <option value="0" selected="@(minRating == "" || minRating == "0")">أي تقييم</option>
+                    <option value="3" selected="@(minRating == "3")">3 نجوم فأكثر</option>
+                    <option value="4" selected="@(minRating == "4")">4 نجوم فأكثر</option>
+                    <option value="4.5" selected="@(minRating == "4.5")">4.5 نجوم فأكثر</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-amber">بحث</button>
+        </form>
+
+        @if (Model.Any())
+        {
+            <div class="grid-3">
+                @foreach (var tech in Model)
+                {
+                    <div class="tech-card">
+                        <span class="corner tl"></span><span class="corner br"></span>
+                        <div class="tech-top">
+                            <div class="avatar">@(string.IsNullOrEmpty(tech.TechnicainName) ? "؟" : tech.TechnicainName.Substring(0, 1))</div>
+                            <div>
+                                <div class="tech-name">@tech.TechnicainName</div>
+                                <div class="tech-role">@tech.CategoryName · @tech.YearsOfExperince سنين خبرة</div>
+                            </div>
+                        </div>
+                        <div class="tech-meta"><span>⭐ <b>@tech.AVGRating.ToString("0.0")</b></span></div>
+                        <a asp-controller="Technician" asp-action="Details" asp-route-id="@tech.Id" class="btn btn-teal btn-block btn-sm">عرض الملف والحجز</a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state"><p>مفيش فنيين متاحين بالمواصفات دي دلوقتي</p></div>
+        }
+    </div>
+</section>

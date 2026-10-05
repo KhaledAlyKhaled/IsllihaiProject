@@ -1,0 +1,14 @@
+﻿@model string
+@{
+    var (css, text) = Model switch
+    {
+        "Pending" => ("pending", "بانتظار الرد"),
+        "Accepted" => ("pending", "تم القبول"),
+        "InProgress" => ("pending", "قيد التنفيذ"),
+        "Completed" => ("done", "مكتمل"),
+        "Cancelled" => ("cancel", "ملغي"),
+        "Rejected" => ("cancel", "مرفوض"),
+        _ => ("pending", Model)
+    };
+}
+<span class="badge @css">@text</span>
