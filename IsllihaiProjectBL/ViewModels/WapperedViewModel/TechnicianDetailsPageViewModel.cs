@@ -10,7 +10,7 @@ namespace IsllihaiProjectBL.ViewModels.WapperedViewModel
 {
     public class TechnicianDetailsPageViewModel
     {
-        public IEnumerable<ReviewViewModel> reviewViewModels { get; set; }
-        public TechnicainViewModel technicainViewModel { get; set; }
+        public IEnumerable<ReviewViewModel> Reviews { get; set; }
+        public TechnicainViewModel Technician { get; set; }
     }
 }

@@ -1,5 +1,64 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using IsllihaiProjectBL.ViewModels.WapperedViewModel
+@model TechnicianDetailsPageViewModel
+
 @{
+    ViewData["Title"] = Model.Technician.TechnicainName;
 }
+
+<section>
+    <div class="container hero-grid" style="align-items:start;">
+        <div>
+            <div class="tech-top" style="margin-bottom:20px;">
+                <div class="avatar" style="width:72px; height:72px; font-size:26px;">@(string.IsNullOrEmpty(Model.Technician.TechnicainName) ? "؟" : Model.Technician.TechnicainName.Substring(0, 1))</div>
+                <div>
+                    <div class="tech-name" style="font-size:22px;">@Model.Technician.TechnicainName</div>
+                    <div class="tech-role">@Model.Technician.CategoryName · @Model.Technician.YearsOfExperince سنين خبرة</div>
+                    <div class="tech-meta" style="margin-top:8px;">
+                        <span>⭐ <b>@Model.Technician.AVGRating.ToString("0.0")</b></span>
+                        <span>@(Model.Technician.IsVertifed ? "موثّق" : "غير موثّق")</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="display" style="font-size:19px; margin-bottom:14px;">آراء العملاء</h3>
+            <div style="display:grid; gap:14px;">
+                @if (Model.Reviews.Any())
+                {
+                    foreach (var review in Model.Reviews)
+                    {
+                        <div class="tech-card">
+                            <div class="tech-top" style="margin-bottom:8px;">
+                                <div>
+                                    <div class="tech-name" style="font-size:14.5px;">@review.CustomerName</div>
+                                    <div class="tech-role" style="font-size:12px;">⭐ @review.Rating · @review.CreatedAt.ToString("d MMM yyyy")</div>
+                                </div>
+                            </div>
+                            <p style="color:var(--text-dim); font-size:14px;">@review.Comment</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p style="color:var(--text-dim);">مفيش تقييمات لسه</p>
+                }
+            </div>
+        </div>
+
+        <div class="ticket">
+            <div class="ticket-head">
+                <span class="code mono">حجز فني</span>
+                <span class="status-pill">@Model.Technician.CategoryName</span>
+            </div>
+            <div class="ticket-body">
+                @if (Model.Technician.IsVertifed)
+                {
+                    <a asp-controller="Booking" asp-action="Create" asp-route-technicianId="@Model.Technician.Id" class="btn btn-amber btn-block">احجز الآن</a>
+                }
+                else
+                {
+                    <p style="color:var(--text-dim); font-size:14px;">الفني ده لسه مستني التوثيق، مينفعش تحجزه دلوقتي.</p>
+                }
+            </div>
+        </div>
+    </div>
+</section>

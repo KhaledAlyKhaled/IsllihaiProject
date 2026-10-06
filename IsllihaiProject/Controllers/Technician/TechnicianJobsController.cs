@@ -2,6 +2,7 @@
 using IsllihaiProjectDAL.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace IsllihaiProject.Controllers.Technician
 {
@@ -16,14 +17,16 @@ namespace IsllihaiProject.Controllers.Technician
             this.technicainService = technicainService;
             this.bookingServices = bookingServices;
         }
-        public IActionResult MyJobs(int id)
+        public IActionResult MyJobs()
         {
+            var id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var tecBooking = bookingServices.GetAllSpecifiecTechnicainBooking(id);
             return View(tecBooking);
         }
         [HttpPost]
-        public IActionResult Accept(int bookingid , int tecId)
+        public IActionResult Accept(int bookingid )
         {
+            var tecId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (tecId <= 0 || bookingid <= 0)
                 return NotFound();
 
@@ -32,8 +35,9 @@ namespace IsllihaiProject.Controllers.Technician
             return RedirectToAction(nameof(MyJobs), new { id = tecId });
         }
         [HttpPost]
-        public IActionResult Start(int bookingid, int tecId)
+        public IActionResult Start(int bookingid)
         {
+            var tecId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (tecId <= 0 || bookingid <= 0)
                 return NotFound();
 
@@ -42,8 +46,9 @@ namespace IsllihaiProject.Controllers.Technician
             return RedirectToAction(nameof(MyJobs), new { id = tecId });
         }
         [HttpPost]
-        public IActionResult Complete(int bookingid, int tecId)
+        public IActionResult Complete(int bookingid)
         {
+            var tecId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (tecId <= 0 || bookingid <= 0)
                 return NotFound();
 
@@ -52,8 +57,9 @@ namespace IsllihaiProject.Controllers.Technician
             return RedirectToAction(nameof(MyJobs), new { id = tecId });
         }
         [HttpPost]
-        public IActionResult Reject(int bookingid, int tecId)
+        public IActionResult Reject(int bookingid)
         {
+            var tecId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (tecId <= 0 || bookingid <= 0)
                 return NotFound();
 

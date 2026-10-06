@@ -190,7 +190,7 @@ namespace IsllihaiProjectBL.Services.Classes
 
             var details = new TechnicianDetailsPageViewModel
             {
-                technicainViewModel = new TechnicainViewModel
+                Technician = new TechnicainViewModel
                 {
                     TechnicainName = tec.User.name,
                     Id = id,
@@ -201,7 +201,7 @@ namespace IsllihaiProjectBL.Services.Classes
                     YearsOfExperince =tec.YearsOfExperience
                 }
                 ,
-                reviewViewModels = review.Select(x=> new ViewModels.ReviewViewModels.ReviewViewModel
+                Reviews = review.Select(x=> new ViewModels.ReviewViewModels.ReviewViewModel
                 {
                     Id = x.Id,
                     Comment = x.Comment,

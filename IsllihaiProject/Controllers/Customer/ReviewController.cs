@@ -2,6 +2,7 @@
 using IsllihaiProjectBL.ViewModels.ReviewViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace IsllihaiProject.Controllers.Customer
 {
@@ -24,8 +25,9 @@ namespace IsllihaiProject.Controllers.Customer
         }
 
         [HttpPost]
-        public IActionResult Create(int bookingId ,int userid, CreateReviewViewModel vm)
+        public IActionResult Create(int bookingId , CreateReviewViewModel vm)
         {
+            var userid = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (!ModelState.IsValid)
                 return View(vm);
 

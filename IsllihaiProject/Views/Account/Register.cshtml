@@ -1,5 +1,94 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using IsllihaiProjectBL.ViewModels.AccountViewModel
+@model RegisterViewModel
+
 @{
+    ViewData["Title"] = "حساب جديد";
+    var isTechnician = Model?.Role == "Technician";
+}
+
+<section>
+    <div class="container">
+        <div class="form-shell">
+            <h3 class="display" style="text-align:center; margin-bottom:6px;">إنشاء حساب</h3>
+            <p style="text-align:center; color:var(--text-dim); font-size:14px; margin-bottom:22px;">اختار نوع الحساب وكمّل بياناتك</p>
+
+            <form asp-controller="Account" asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="field-error" style="margin-bottom:12px;"></div>
+
+                
+                <input type="hidden" asp-for="Role" id="roleInput" value="@(isTechnician ? "Technician" : "Customer")" />
+                <div class="role-switch">
+                    <button type="button" id="btn-customer" class="@(isTechnician ? "" : "active")" onclick="setRole('Customer')">عميل</button>
+                    <button type="button" id="btn-technician" class="@(isTechnician ? "active" : "")" onclick="setRole('Technician')">فني</button>
+                </div>
+                <span asp-validation-for="Role" class="field-error"></span>
+
+                <div class="field">
+                    <label asp-for="FullName">الاسم بالكامل</label>
+                    <input asp-for="FullName" placeholder="اسمك" />
+                    <span asp-validation-for="FullName" class="field-error"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Email">البريد الإلكتروني</label>
+                    <input asp-for="Email" type="email" placeholder="name@example.com" autocomplete="username" />
+                    <span asp-validation-for="Email" class="field-error"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="PhoneNumber">رقم الهاتف</label>
+                    <input asp-for="PhoneNumber" type="tel" placeholder="01xxxxxxxxx" />
+                    <span asp-validation-for="PhoneNumber" class="field-error"></span>
+                </div>
+
+               
+                <div id="technicianFields" style="display:@(isTechnician ? "block" : "none");">
+                    <div class="field">
+                        <label asp-for="CategoryId">التخصص</label>
+                        <select asp-for="CategoryId" asp-items="@(ViewBag.Categories as SelectList)">
+                            <option value="">اختار التخصص</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="field-error"></span>
+                    </div>
+                    <div class="field">
+                        <label asp-for="YearsOfExperience">سنين الخبرة</label>
+                        <input asp-for="YearsOfExperience" type="number" min="0" max="20" />
+                        <span asp-validation-for="YearsOfExperience" class="field-error"></span>
+                        <div class="field-hint">حسابك هيتراجع من الأدمن قبل ما يظهر في نتائج البحث</div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Password">كلمة المرور</label>
+                    <input asp-for="Password" type="password" placeholder="••••••••" autocomplete="new-password" />
+                    <span asp-validation-for="Password" class="field-error"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="ConfirmPassword">تأكيد كلمة المرور</label>
+                    <input asp-for="ConfirmPassword" type="password" placeholder="••••••••" autocomplete="new-password" />
+                    <span asp-validation-for="ConfirmPassword" class="field-error"></span>
+                </div>
+
+                <button type="submit" class="btn btn-amber btn-block">إنشاء الحساب</button>
+            </form>
+
+            <p style="text-align:center; margin-top:18px; color:var(--text-dim); font-size:13.5px;">
+                عندك حساب؟
+                <a asp-controller="Account" asp-action="Login" style="color:var(--amber);">سجّل دخول</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function setRole(role) {
+            document.getElementById('roleInput').value = role;
+            document.getElementById('btn-customer').classList.toggle('active', role === 'Customer');
+            document.getElementById('btn-technician').classList.toggle('active', role === 'Technician');
+            document.getElementById('technicianFields').style.display = role === 'Technician' ? 'block' : 'none';
+        }
+    </script>
 }

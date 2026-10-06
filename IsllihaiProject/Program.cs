@@ -23,11 +23,12 @@ builder.Services.AddScoped<IBookingRepo , BookingRepo>();
 builder.Services.AddScoped<ICategoreyRepo , CategoreyRepo>();
 builder.Services.AddScoped<IReviewRepo  , ReviewRepo>();
 
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<ICategoryService, CategoryServcie>();
 builder.Services.AddScoped<ITechnicainService, TechnicainService>();
 builder.Services.AddScoped<IBookingServices, BookingService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
-builder.Services.AddScoped<ILoginService, LoginService>();
+
 //
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
     {
@@ -58,7 +59,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Account}/{action=Login}/{id?}")
     .WithStaticAssets();
 
 

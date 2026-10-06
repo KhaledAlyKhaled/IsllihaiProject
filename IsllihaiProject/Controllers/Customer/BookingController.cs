@@ -3,6 +3,7 @@ using IsllihaiProjectBL.ViewModels.BookingViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace IsllihaiProject.Controllers.Customer
 {
@@ -18,8 +19,9 @@ namespace IsllihaiProject.Controllers.Customer
             this.technicainService = technicainService;
         }
         [HttpGet]
-        public IActionResult MyBookings(int id)
+        public IActionResult MyBookings()
         {
+            var id =int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var booking = bookingServices.GetAllSpecifiecCustomerBooking(id);
             return View(booking);
         }
@@ -34,8 +36,9 @@ namespace IsllihaiProject.Controllers.Customer
             return View(new CreatedBookingViewModel { TechnicanId = technicianId });
         }
         [HttpPost]
-        public IActionResult Create (int userid , CreatedBookingViewModel vm)
+        public IActionResult Create (CreatedBookingViewModel vm)
         {
+            var userid = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (userid <= 0) 
                 return BadRequest();
             var created = bookingServices.CreateBooking(userid, vm);
@@ -48,8 +51,9 @@ namespace IsllihaiProject.Controllers.Customer
             return RedirectToAction(nameof(MyBookings));
         }
         [HttpPost]
-        public IActionResult Cancel(int bookingid, int userId)
+        public IActionResult Cancel(int bookingid)
         {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             if (userId <= 0 || bookingid <= 0)
                 return NotFound();
 
