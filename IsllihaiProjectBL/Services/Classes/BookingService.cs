@@ -81,6 +81,9 @@ namespace IsllihaiProjectBL.Services.Classes
         {
             try
             {
+                if (model.TechnicanId is null) return false;
+                var tech = unitOfWork.tecnicianRepo.GetTechnicanById(model.TechnicanId.Value);
+                if (tech is null || !tech.IsVertified) return false;
                 var booking = new Booking
                 {
                     price =model.price,
@@ -90,7 +93,7 @@ namespace IsllihaiProjectBL.Services.Classes
                     Status = Status.Pending,
                     UserId = UserId,
                     TechnicanId = model.TechnicanId,
-                    CategoryId = model.CategoryId,
+                    CategoryId = tech.CategoryId,
                 };
 
                 unitOfWork.GetRepo<Booking>().Add(booking);
@@ -114,7 +117,7 @@ namespace IsllihaiProjectBL.Services.Classes
                 Id = booking.Id,
                 CategoryName =booking.Category.Name,
                 CustomerName=booking.User.name,
-                TechName=booking.Technican.User.name ?? "—",
+                TechName=booking.Technican?.User.name ?? "—",
                 StartDate=booking.OrderedAt.Date,
                 Status =booking.Status.ToString()
             });
@@ -123,7 +126,7 @@ namespace IsllihaiProjectBL.Services.Classes
 
         }
 
-        public IEnumerable<BookingViewModel> GetAllSpecifiecCustomerBooking(int customerId)
+        public IEnumerable<BookingViewModel>? GetAllSpecifiecCustomerBooking(int customerId)
         {
             var BookingToReturn = unitOfWork.bookingRepo.GetAllWithCategoryAndUSerAndTech(x=> x.UserId == customerId);
             if (!BookingToReturn.Any())
@@ -133,7 +136,7 @@ namespace IsllihaiProjectBL.Services.Classes
             {
                 Id = x.Id,
                 CategoryName = x.Category.Name,
-                TechName = x.Technican.User.name ?? "—",
+                TechName = x.Technican?.User.name ?? "—",
                 StartDate=x.OrderedAt.Date,
                 Address = x.Address,
                 Status = x.Status.ToString()
@@ -155,7 +158,9 @@ namespace IsllihaiProjectBL.Services.Classes
                 customerName = x.User.name,
                 Description = x.Description,
                 StartDate = x.OrderedAt.Date,
-                Status = x.Status.ToString()
+                Status = x.Status.ToString(),
+                Phone = x.User.PhoneNumber
+                
             });
 
             return BookingToReturn;

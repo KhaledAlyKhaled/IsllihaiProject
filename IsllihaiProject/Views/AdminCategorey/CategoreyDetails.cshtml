@@ -1,28 +1,56 @@
-﻿@model CategoreyTechesViewModel
+@model CategoreyTechesViewModel
+
 @{
+    ViewData["Title"] = "تفاصيل التصنيف";
     Layout = "_AdminLayout";
 }
-<div class="details-card">
-    <h3>@Model.Name</h3>
-    <div class="stamp-row">
-        <div class="item"><b>@Model.NumberOfTechnicians</b><span>فني مسجل</span></div>
-        <div class="item"><b>@Model.NumberOfBookings</b><span>طلب إجمالي</span></div>
-    </div>
-</div>
 
-<table class="admin-table">
-    <thead>
-        <tr><th>الاسم</th><th>سنين الخبرة</th><th>التقييم</th><th>الحالة</th></tr>
-    </thead>
-    <tbody>
-        @foreach (var tech in Model.Technicians)
-        {
-            <tr>
-                <td>@tech.TechnicainName</td>
-                <td class="mono">@tech.YearsOfExperince</td>
-                <td class="mono">⭐ @tech.AVGRating</td>
-                <td>@(tech.IsVertifed ? "موثّق" : "X")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<main class="admin-main">
+    <div class="admin-topbar">
+        <div>
+            <h2>تفاصيل التصنيف</h2>
+            <p>الفنيين المسجلين تحت التصنيف ده بس</p>
+        </div>
+        <a asp-controller="AdminCategorey" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-ghost btn-sm">✎ تعديل التصنيف</a>
+    </div>
+
+    <div class="details-card">
+        <h3 class="display" style="font-size:20px;">@Model.Name</h3>
+        <p class="mono" style="color:var(--text-dim); font-size:12.5px; margin-top:4px;">#@Model.Id</p>
+        <div class="stamp-row">
+            <div class="item"><b>@Model.NumberOfTechnicians</b><span>فني مسجل</span></div>
+            <div class="item"><b>@Model.NumberOfBookings</b><span>طلب إجمالي</span></div>
+        </div>
+    </div>
+
+    @if (Model.Technicians.Any())
+    {
+        <table class="admin-table">
+            <thead>
+                <tr><th>#</th><th>اسم الفني</th><th>سنين الخبرة</th><th>التقييم</th><th>الحالة</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var t in Model.Technicians)
+                {
+                    <tr>
+                        <td class="mono">@t.Id</td>
+                        <td>@t.TechnicainName</td>
+                        <td class="mono">@t.YearsOfExperince</td>
+                        <td class="mono">⭐ @t.AVGRating.ToString("0.0")</td>
+                        <td>
+                            @if (t.IsVertifed) { <span class="badge-verified">موثّق</span> }
+                            else { <span class="badge-unverified">غير موثّق</span> }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="ico">🛠</div>
+            <p>مفيش فنيين مسجلين تحت التصنيف ده لسه</p>
+        </div>
+    }
+</main>

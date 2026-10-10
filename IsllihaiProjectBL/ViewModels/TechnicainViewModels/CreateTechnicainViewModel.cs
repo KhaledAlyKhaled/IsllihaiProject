@@ -13,6 +13,7 @@ namespace IsllihaiProjectBL.ViewModels.TechnicainViewModels
         public string CategoryName { get; set; } = null!;
         public int YearsOfExperince { get; set; }
         public int Phone {  get; set; }
+        public string City { get; set; }
         
     }
 }

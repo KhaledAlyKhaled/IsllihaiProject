@@ -20,6 +20,7 @@ namespace IsllihaiProjectBL.Services.Interfaces
         IEnumerable<TechnicainViewModel> GetAllTechnicansForSpecificCategoreyForAdmin(int CategoreyId);
         bool UpdateAverageRating(int technicianId);
         TechnicianDetailsPageViewModel? GetForDetailsPage (int id);
+        public int GetTechnicianIdByUserId(int userId);
 
     }
 }

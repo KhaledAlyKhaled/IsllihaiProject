@@ -1,8 +1,8 @@
 ﻿@model ApplicationUserViewModel
 
 @{
+    Layout = "_AuthLayout";
     ViewData["Title"] = "تسجيل الدخول";
-    Layout = null;
     var returnUrl = ViewData["ReturnUrl"] ?? Context.Request.Query["returnUrl"].ToString();
 }
 

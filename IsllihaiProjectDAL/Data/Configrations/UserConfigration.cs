@@ -15,7 +15,6 @@ namespace IsllihaiProjectDAL.Data.Configrations
         {
             builder.Property(x => x.name)
                 .IsRequired()
-                .HasColumnType("varchar")
                 .HasMaxLength(100);
             
         }

@@ -2,6 +2,7 @@
 using IsllihaiProjectBL.ViewModels.AccountViewModel;
 using IsllihaiProjectDAL.Entities;
 using IsllihaiProjectDAL.Entities.Enums;
+using IsllihaiProjectDAL.Reposatories.Interface;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace IsllihaiProjectBL.Services.Classes
     public class LoginService :ILoginService
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly UnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
-        public LoginService(UserManager<ApplicationUser> userManager , UnitOfWork unitOfWork) 
+        public LoginService(UserManager<ApplicationUser> userManager , IUnitOfWork unitOfWork) 
         {
             this.userManager = userManager;
             this.unitOfWork = unitOfWork;
@@ -94,7 +95,8 @@ namespace IsllihaiProjectBL.Services.Classes
                         CategoryId = model.CategoryId!.Value,
                         YearsOfExperience = model.YearsOfExperience!.Value,
                         IsVertified = false,
-                        AvgRating = 0
+                        AvgRating = 0,
+                        City = model.City,
                     });
                     unitOfWork.SaveChanges();
                 }
@@ -110,13 +112,11 @@ namespace IsllihaiProjectBL.Services.Classes
 
         public ApplicationUser User(ApplicationUserViewModel user)
         {
-            var useremail = userManager.FindByEmailAsync(user.Email).Result;
+            var useremail =userManager.FindByEmailAsync(user.Email).GetAwaiter().GetResult();
             if (useremail is null)
                 return null;
             var userpassword = userManager.CheckPasswordAsync(useremail, user.Password);
-            if (userpassword is null)
-                return null;
-            else
+            
                 return useremail;
         }
     }

@@ -144,7 +144,7 @@ namespace IsllihaiProjectBL.Services.Classes
         public IEnumerable<CategoreyForAdminViewModel> GetAllCateGoriesForAdmin()
         {
             
-            var Category = unitOfWork.GetRepo<Category>().GetAll() ?? [];
+            var Category = unitOfWork.categoreyRepo.GetAllWithTechAndBooking() ?? [];
 
 
             var CategoryViewModels = Category.Select(x => new CategoreyForAdminViewModel

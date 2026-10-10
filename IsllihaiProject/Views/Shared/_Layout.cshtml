@@ -1,26 +1,57 @@
-﻿<!DOCTYPE html>
+@{
+    var isLoggedIn = User.Identity?.IsAuthenticated == true;
+    var isAdmin = User.IsInRole("Admin");
+    var isCustomer = User.IsInRole("Customer");
+    var isTechnician = User.IsInRole("Technician");
+}
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] — إصلحلي</title>
-    <link rel="stylesheet" href="~/css/Site/style.css">
+    <link rel="stylesheet" href="~/css/style.css">
 </head>
 <body class="blueprint">
 
     <header class="site">
         <div class="bar">
             <a asp-controller="Home" asp-action="Index" class="brand"><span class="mark"><span>ص</span></span> إصلحلي</a>
+
             <nav class="main-nav">
-                <a asp-controller="Home" asp-action="Index">الرئيسية</a>
-                <a asp-controller="CustomerCategorey" asp-action="Index">الأقسام</a>
-                @* TODO: الأرقام (1) دي مؤقتة لحد الـ Identity، وبعدها بتتشال والروابط بتتحدد حسب الدور *@
-                <a asp-controller="Booking" asp-action="MyBookings" asp-route-id="1">طلباتي</a>
-                <a asp-controller="TechnicianJobs" asp-action="MyJobs" asp-route-id="1">طلبات الفني</a>
-                <a asp-controller="AdminCategorey" asp-action="Index">لوحة الأدمن</a>
+                @if (isLoggedIn)
+                {
+                    <a asp-controller="Home" asp-action="Index">الرئيسية</a>
+
+                    @if (isCustomer)
+                    {
+                        <a asp-controller="CustomerCategorey" asp-action="Index">الأقسام</a>
+                        <a asp-controller="Booking" asp-action="MyBookings">طلباتي</a>
+                    }
+                    @if (isTechnician)
+                    {
+                        <a asp-controller="TechnicianJobs" asp-action="MyJobs">طلبات العمل</a>
+                    }
+                    @if (isAdmin)
+                    {
+                        <a asp-controller="AdminCategorey" asp-action="Index">لوحة الأدمن</a>
+                    }
+                }
             </nav>
+
             <div class="header-actions">
-                <a class="btn btn-ghost btn-sm" asp-controller="Account" asp-action="Login">دخول</a>
+                @if (isLoggedIn)
+                {
+                    <span class="mono" style="font-size:12.5px; color:var(--text-dim);">@User.Identity.Name</span>
+                    <form asp-controller="Account" asp-action="LogOut" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-ghost btn-sm">خروج</button>
+                    </form>
+                }
+                else
+                {
+                    <a class="btn btn-ghost btn-sm" asp-controller="Account" asp-action="Login">دخول</a>
+                    <a class="btn btn-amber btn-sm" asp-controller="Account" asp-action="Register">حساب جديد</a>
+                }
             </div>
         </div>
     </header>

@@ -80,11 +80,12 @@ namespace IsllihaiProjectBL.Services.Classes
 
         public IEnumerable<TechnicainViewModel> SearchTechnicains(int CategoryId, double MinRating, string Address)
         {
-            var Technicains = unitOfWork.tecnicianRepo.GetAllTechnicainWithUserInfos(x=> x.CategoryId == CategoryId && x.AvgRating >= MinRating );
+            var Technicains = unitOfWork.tecnicianRepo.GetAllTechnicainWithUserInfos(x=> x.CategoryId == CategoryId && x.AvgRating >= MinRating && x.IsVertified == true);
 
             if (Technicains is null || !Technicains.Any())
                 return [];
 
+            
             var TechnicainsViewModelsResult = Technicains.Select(x => new TechnicainViewModel
             {
                 Id = x.Id,
@@ -96,7 +97,28 @@ namespace IsllihaiProjectBL.Services.Classes
                 AVGRating = x.AvgRating
 
             });
-            return TechnicainsViewModelsResult;
+            if (Address == null)
+                return TechnicainsViewModelsResult;
+            else
+            {
+                var Technicains2 = unitOfWork.tecnicianRepo.GetAllTechnicainWithUserInfos(x => x.CategoryId == CategoryId && x.AvgRating >= MinRating && x.City==Address && x.IsVertified == true);
+                if (Technicains2 is null || !Technicains2.Any())
+                    return [];
+                var TechnicainsViewModelsResult2 = Technicains.Select(x => new TechnicainViewModel
+                {
+                    Id = x.Id,
+                    TechnicainName = x.User.name,
+                    CategoryName = x.Category.Name,
+                    YearsOfExperince = x.YearsOfExperience,
+                    IsVertifed = x.IsVertified
+                ,
+                    AVGRating = x.AvgRating
+
+
+                });
+                return TechnicainsViewModelsResult2;
+            }
+            
         }
 
         public UpdatedTechnicainViewModel TechnicainToUpdate(int Id)
@@ -214,5 +236,7 @@ namespace IsllihaiProjectBL.Services.Classes
 
             return details;
         }
+        public int GetTechnicianIdByUserId(int userId)
+    => unitOfWork.GetRepo<Technican>().GetAll(t => t.UserId == userId).FirstOrDefault().Id;
     }
 }

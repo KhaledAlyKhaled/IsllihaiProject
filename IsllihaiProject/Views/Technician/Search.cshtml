@@ -35,6 +35,8 @@
             <div class="grid-3">
                 @foreach (var tech in Model)
                 {
+                    if (tech.IsVertifed = true)
+                    {
                     <div class="tech-card">
                         <span class="corner tl"></span><span class="corner br"></span>
                         <div class="tech-top">
@@ -47,6 +49,7 @@
                         <div class="tech-meta"><span>⭐ <b>@tech.AVGRating.ToString("0.0")</b></span></div>
                         <a asp-controller="Technician" asp-action="Details" asp-route-id="@tech.Id" class="btn btn-teal btn-block btn-sm">عرض الملف والحجز</a>
                     </div>
+                    }
                 }
             </div>
         }

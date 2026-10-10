@@ -20,9 +20,12 @@ namespace IsllihaiProject.Controllers.Customer
             
             return View(tec);
         }
-        public IActionResult Details(int tecId)
+        public IActionResult Details(int id)
         {
-            var tec = technicainService.GetForDetailsPage(tecId);
+            var tec = technicainService.GetForDetailsPage(id);
+            if (tec is null)
+                return NotFound();  
+
             return View(tec);
         }
     }

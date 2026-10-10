@@ -18,7 +18,7 @@ namespace IsllihaiProjectBL.Services.Interfaces
         IEnumerable<BookingAdminViewModel> GetAllBookings();
 
         IEnumerable<BookingViewModel> GetAllSpecifiecCustomerBooking(int customerId);
-        IEnumerable<BookingTechnicainViewModel> GetAllSpecifiecTechnicainBooking(int TechnicainId);
+        IEnumerable<BookingTechnicainViewModel>? GetAllSpecifiecTechnicainBooking(int TechnicainId);
         BookingAdminViewModel GetBookingDetails (int BookingId);
 
 

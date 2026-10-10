@@ -19,14 +19,18 @@ namespace IsllihaiProject.Controllers.Technician
         }
         public IActionResult MyJobs()
         {
-            var id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var tecBooking = bookingServices.GetAllSpecifiecTechnicainBooking(id);
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var tecId = technicainService.GetTechnicianIdByUserId(userId);
+            var tecBooking = bookingServices.GetAllSpecifiecTechnicainBooking(tecId);
             return View(tecBooking);
         }
         [HttpPost]
         public IActionResult Accept(int bookingid )
         {
-            var tecId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var tecId1 = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var tecId = technicainService.GetTechnicianIdByUserId(tecId1);
+
+
             if (tecId <= 0 || bookingid <= 0)
                 return NotFound();
 
@@ -37,7 +41,8 @@ namespace IsllihaiProject.Controllers.Technician
         [HttpPost]
         public IActionResult Start(int bookingid)
         {
-            var tecId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var tecId1 = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var tecId = technicainService.GetTechnicianIdByUserId(tecId1);
             if (tecId <= 0 || bookingid <= 0)
                 return NotFound();
 
@@ -48,7 +53,8 @@ namespace IsllihaiProject.Controllers.Technician
         [HttpPost]
         public IActionResult Complete(int bookingid)
         {
-            var tecId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var tecId1 = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var tecId = technicainService.GetTechnicianIdByUserId(tecId1);
             if (tecId <= 0 || bookingid <= 0)
                 return NotFound();
 
@@ -59,7 +65,8 @@ namespace IsllihaiProject.Controllers.Technician
         [HttpPost]
         public IActionResult Reject(int bookingid)
         {
-            var tecId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var tecId1 = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var tecId = technicainService.GetTechnicianIdByUserId(tecId1);
             if (tecId <= 0 || bookingid <= 0)
                 return NotFound();
 

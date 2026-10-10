@@ -10,7 +10,7 @@ namespace IsllihaiProjectDAL.Reposatories.Interface
 {
     public interface IBookingRepo : IGenericRepo<Booking>
     {
-        IEnumerable<Booking> GetAllWithCategoryAndUSerAndTech(Expression<Func<Booking, bool>>? condition = null);
-        Booking GetAllWithCategoryAndUSerAndTech(int id);
+        IEnumerable<Booking>? GetAllWithCategoryAndUSerAndTech(Expression<Func<Booking, bool>>? condition = null);
+        Booking? GetAllWithCategoryAndUSerAndTech(int id);
     }
 }

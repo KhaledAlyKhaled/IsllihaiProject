@@ -12,6 +12,7 @@ namespace IsllihaiProjectDAL.Entities
         public int YearsOfExperience { get; set; }
         public bool IsVertified { get; set; }
         public double AvgRating { get; set; }
+        public string City { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public int UserId { get; set; }

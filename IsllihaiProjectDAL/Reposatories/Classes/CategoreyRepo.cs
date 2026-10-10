@@ -23,13 +23,13 @@ namespace IsllihaiProjectDAL.Reposatories.Classes
 public IEnumerable<Category> GetAllWithTechAndBooking(Expression<Func<Category, bool>>? Condition = null)
         {
             if (Condition is null)
-                return dbContext.Category.Include(x => x.Technicans)
-                .Include(x => x.Bookings)
+                return dbContext.Category.Include(x => x.Technicans).ThenInclude(t => t.User)
+.Include(x => x.Bookings)
                 .AsNoTracking()
                 .ToList();
             else
-                return dbContext.Category.Include(x => x.Technicans)
-                .Include(x => x.Bookings)
+                return dbContext.Category.Include(x => x.Technicans).ThenInclude(t => t.User)
+.Include(x => x.Bookings)
                 .AsNoTracking()
                 .Where(Condition)
                 .ToList();
@@ -37,8 +37,8 @@ public IEnumerable<Category> GetAllWithTechAndBooking(Expression<Func<Category, 
 
         public Category GetByIdWithTechAndBooking(int id)
         {
-            return dbContext.Category.Include(x => x.Technicans)
-                .Include(x => x.Bookings).FirstOrDefault(x=>x.Id ==id);
+            return dbContext.Category.Include(x => x.Technicans).ThenInclude(t => t.User)
+.Include(x => x.Bookings).FirstOrDefault(x=>x.Id ==id);
         }
     }
 }

@@ -2,6 +2,7 @@
 @model RegisterViewModel
 
 @{
+    Layout = "_AuthLayout";
     ViewData["Title"] = "حساب جديد";
     var isTechnician = Model?.Role == "Technician";
 }
@@ -55,6 +56,11 @@
                         <input asp-for="YearsOfExperience" type="number" min="0" max="20" />
                         <span asp-validation-for="YearsOfExperience" class="field-error"></span>
                         <div class="field-hint">حسابك هيتراجع من الأدمن قبل ما يظهر في نتائج البحث</div>
+                    </div>
+                    <div class="field">
+                        <label asp-for="City">سنين الخبرة</label>
+                        <input asp-for="City" placeholder="مثال : مدينة نصر/>
+                        <span asp-validation-for="City" class="field-error"></span>
                     </div>
                 </div>
 

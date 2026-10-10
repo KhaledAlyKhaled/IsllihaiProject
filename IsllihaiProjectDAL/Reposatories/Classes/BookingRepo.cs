@@ -20,30 +20,26 @@ namespace IsllihaiProjectDAL.Reposatories.Classes
             this.dbContext = dbContext;
         }
 
-        public IEnumerable<Booking> GetAllWithCategoryAndUSerAndTech(Expression<Func<Booking, bool>>? condition = null)
+        public IEnumerable<Booking>? GetAllWithCategoryAndUSerAndTech(Expression<Func<Booking, bool>>? condition = null)
         {
             if (condition is null)
-                return dbContext.Bookings.Include(x => x.Category)
-                .Include(x => x.User)
-                .Include(x => x.Technican)
-                .AsNoTracking()
+                return WithRelations()
                 .ToList();
             else
-                return dbContext.Bookings.Include(x => x.Category)
-                .Include(x => x.User)
-                .Include(x => x.Technican)
-                .AsNoTracking()
+                return WithRelations()
                 .Where(condition)
                 .ToList();
 
         }
 
-        public Booking GetAllWithCategoryAndUSerAndTech(int id)
+        public Booking? GetAllWithCategoryAndUSerAndTech(int id)
         {
-            return dbContext.Bookings.Include(x => x.Category)
-                .Include(x => x.User)
-                .Include(x => x.Technican)
-                .AsNoTracking().FirstOrDefault(x=>x.Id == id);
+            return WithRelations().FirstOrDefault(x=>x.Id == id);
         }
+        private IQueryable<Booking> WithRelations() => dbContext.Bookings
+    .Include(x => x.Category)
+    .Include(x => x.User)                                  
+    .Include(x => x.Technican).ThenInclude(t => t.User)    
+    .AsNoTracking();
     }
 }

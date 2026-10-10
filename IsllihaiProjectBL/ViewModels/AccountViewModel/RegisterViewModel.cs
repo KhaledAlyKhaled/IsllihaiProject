@@ -37,5 +37,7 @@ namespace IsllihaiProjectBL.ViewModels.AccountViewModel
 
         [Range(0, 20, ErrorMessage = "سنين الخبرة بين 0 و20")]
         public int? YearsOfExperience { get; set; }
+        [Required]
+        public string City { get; set; }
     }
 }

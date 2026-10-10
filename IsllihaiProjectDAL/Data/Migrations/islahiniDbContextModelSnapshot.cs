@@ -80,7 +80,7 @@ namespace IsllihaiProjectDAL.Data.Migrations
                     b.Property<string>("name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -210,6 +210,10 @@ namespace IsllihaiProjectDAL.Data.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsVertified")
                         .HasColumnType("bit");
